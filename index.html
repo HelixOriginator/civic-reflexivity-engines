@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civic Reflexivity Engines: Designing Governments That Learn in Public</title>
+    <meta name="description" content="A research framework for AI-mediated governance systems that enable public learning and collective sensemaking. Civic Reflexivity Engines make policy assumptions explicit, expose trade-offs, and foster structured citizen engagement.">
+    <meta name="keywords" content="civic reflexivity, AI governance, participatory democracy, algorithmic governance, collective sensemaking, adaptive governance, epistemic infrastructure">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-soft: #ff6b6b;
+            --text: #f0f0f0;
+            --text-dim: #b8b8b8;
+            --bg: #0f0f1e;
+            --bg-card: #1e1e3f;
+            --border: #2a2a4a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(233, 69, 96, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(22, 33, 62, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .label {
+            font-size: 0.875rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+        
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent-soft) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+        
+        .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text-dim);
+            max-width: 800px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.8s backwards;
+        }
+        
+        .insight-box {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--secondary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 800px;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            box-shadow: 0 20px 60px rgba(233, 69, 96, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .insight-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(233, 69, 96, 0.3);
+            border-color: var(--accent-soft);
+        }
+        
+        .insight-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .insight-text {
+            color: var(--text);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .insight-text strong {
+            color: var(--accent-soft);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .insight-text em {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 600;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-soft);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: rgba(233, 69, 96, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Content Sections */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(233, 69, 96, 0.2);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .feature-text {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+        
+        /* Architecture Section */
+        .architecture {
+            background: var(--secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .layers-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .layer-item {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .layer-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 10px 40px rgba(233, 69, 96, 0.15);
+        }
+        
+        .layer-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .layer-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        
+        .layer-description {
+            color: var(--text-dim);
+        }
+        
+        /* Outcomes Section */
+        .outcomes-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .outcome-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .outcome-item:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+        }
+        
+        .outcome-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .outcome-text {
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: var(--primary);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                padding: 4rem 1.5rem;
+            }
+            
+            .hero {
+                min-height: 90vh;
+            }
+            
+            .insight-box {
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+            }
+            
+            .insight-icon {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="label">Research Framework</div>
+            <h1>Civic Reflexivity Engines</h1>
+            <p class="subtitle">
+                Designing AI-mediated governance systems that enable public learning and collective sensemaking. 
+                Making policy assumptions explicit, exposing trade-offs, and fostering structured citizen engagement 
+                rather than automating decisions.
+            </p>
+            <div class="cta-group">
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <p class="insight-text">
+                        <strong>The Core Principle:</strong> The future of democratic governance depends less on smarter 
+                        decision-making systems and more on shared, machine-supported sensemaking. CREs reframe AI as a 
+                        <em>civic mirror</em> rather than a governing authority—enabling adaptive institutions that learn 
+                        without eroding legitimacy.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Rethinking AI in Governance</h2>
+                <p class="section-description">
+                    Civic Reflexivity Engines represent a paradigm shift from algorithmic optimization 
+                    to institutionalized reflection—creating adaptive democracies that learn in public.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Epistemic Infrastructure</h3>
+                    <p class="feature-text">
+                        Rather than automating decisions, CREs operate as public-facing knowledge systems that 
+                        surface and test the assumptions underlying policy choices.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">Explicit Trade-offs</h3>
+                    <p class="feature-text">
+                        Make uncertainty visible and expose value conflicts in real time, enabling citizens 
+                        to engage with evolving policy hypotheses rather than predetermined outcomes.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="feature-title">Collective Sensemaking</h3>
+                    <p class="feature-text">
+                        Transform AI from a governing authority into a civic mirror that supports shared 
+                        learning and structured citizen participation in policy reasoning.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Continuous Learning</h3>
+                    <p class="feature-text">
+                        Shift from episodic decision-making to continuous learning processes where 
+                        assumptions can be iteratively revised based on public feedback.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Democratic Legitimacy</h3>
+                    <p class="feature-text">
+                        Build trust through transparency of reasoning rather than opacity of algorithms, 
+                        creating adaptive institutions that learn without eroding legitimacy.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Value-Centered Design</h3>
+                    <p class="feature-text">
+                        Simulate policy outcomes across conflicting value frameworks rather than optimizing 
+                        for single metrics, acknowledging the contested nature of social problems.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section architecture">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Four-Layer Architecture</h2>
+                <p class="section-description">
+                    A reference architecture designed to support collective reflection, disagreement, 
+                    and learning rather than optimization or enforcement.
+                </p>
+            </div>
+            
+            <div class="layers-grid">
+                <div class="layer-item">
+                    <div class="layer-number">01</div>
+                    <h3 class="layer-title">Assumption Mapping Layer</h3>
+                    <p class="layer-description">
+                        Extracts and visualizes the implicit assumptions embedded in policy proposals, 
+                        making the foundations of governance decisions explicit and contestable.
+                    </p>
+                </div>
+                
+                <div class="layer-item">
+                    <div class="layer-number">02</div>
+                    <h3 class="layer-title">Scenario Tension Layer</h3>
+                    <p class="layer-description">
+                        Simulates policy outcomes across conflicting value frameworks rather than single 
+                        metrics, revealing tensions between competing priorities and worldviews.
+                    </p>
+                </div>
+                
+                <div class="layer-item">
+                    <div class="layer-number">03</div>
+                    <h3 class="layer-title">Public Interpretation Layer</h3>
+                    <p class="layer-description">
+                        Translates model behavior into legible narratives, uncertainty ranges, and value 
+                        conflicts that citizens can meaningfully engage with and contest.
+                    </p>
+                </div>
+                
+                <div class="layer-item">
+                    <div class="layer-number">04</div>
+                    <h3 class="layer-title">Revision Loop Layer</h3>
+                    <p class="layer-description">
+                        Allows policymakers and the public to iteratively revise assumptions and premises 
+                        through structured reflection cycles, not just tweak parameters.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Expected Outcomes</h2>
+                <p class="section-description">
+                    If implemented, Civic Reflexivity Engines would fundamentally transform how 
+                    democratic societies approach governance and collective decision-making.
+                </p>
+            </div>
+            
+            <div class="outcomes-list">
+                <div class="outcome-item">
+                    <div class="outcome-icon">→</div>
+                    <p class="outcome-text">
+                        <strong>Shift policymaking</strong> from episodic decision events to continuous learning 
+                        processes that adapt to new evidence and evolving social understanding.
+                    </p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">→</div>
+                    <p class="outcome-text">
+                        <strong>Create a new civic role</strong> for citizens as co-interpreters and 
+                        knowledge-builders rather than passive consultees or opinion providers.
+                    </p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">→</div>
+                    <p class="outcome-text">
+                        <strong>Reduce policy lock-in</strong> by institutionalizing revision, doubt, and 
+                        constructive disagreement as normal parts of governance.
+                    </p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">→</div>
+                    <p class="outcome-text">
+                        <strong>Establish AI as a public good</strong> that enhances democratic capacity 
+                        and collective intelligence rather than replacing human judgment.
+                    </p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">→</div>
+                    <p class="outcome-text">
+                        <strong>Enable adaptability and legitimacy</strong> to evolve hand in hand, creating 
+                        governance systems that are both responsive and trustworthy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                <strong>Civic Reflexivity Engines: Designing Governments That Learn in Public</strong><br>
+                A research framework exploring AI-mediated governance that prioritizes collective learning 
+                over algorithmic automation.
+            </p>
+            <p class="footer-text" style="margin-top: 2rem; font-size: 0.9rem;">
+                Created by <strong>Kallol Chakrabarti</strong>, Global Independent Researcher<br>
+                © 2026 Civic Reflexivity Engines Research Project
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards and layer items
+        document.querySelectorAll('.feature-card, .layer-item, .outcome-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
